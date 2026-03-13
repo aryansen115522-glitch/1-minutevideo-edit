@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha AI Pro Max - Video Engine</title>
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <style>
+        :root { --main: #00ff88; --dark: #080808; }
+        body { background: var(--dark); color: white; font-family: 'Arial', sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .card { background: #111; border: 2px solid var(--main); border-radius: 30px; width: 100%; max-width: 450px; padding: 30px; text-align: center; box-shadow: 0 0 50px rgba(0,255,136,0.2); }
+        .btn { background: #1a1a1a; color: var(--main); border: 1px solid var(--main); padding: 20px; width: 100%; border-radius: 15px; font-weight: bold; cursor: pointer; margin-bottom: 15px; font-size: 16px; transition: 0.3s; }
+        .btn:hover { background: var(--main); color: #000; }
+        #process_btn { background: linear-gradient(45deg, #00ff88, #00bcff); color: #000; border: none; font-size: 20px; display: none; }
+        .loader { display: none; margin: 20px auto; border: 5px solid #333; border-top: 5px solid var(--main); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        video { width: 100%; border-radius: 20px; margin-top: 25px; border: 2px solid #222; display: none; }
+        .ad-box { background: #000; height: 250px; margin: 20px 0; border-radius: 15px; border: 1px solid #222; overflow: hidden; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1 style="color:var(--main); letter-spacing: 2px;">ALPHA AI V4</h1>
+    <p style="color:#777; font-size: 12px;">CapCut Style Zoom • Mute Base • Pro Audio</p>
+
+    <div class="ad-box">
+        <script type="text/javascript">
+            atOptions = { 'key' : 'aa48394a7b7e55e3977a03bc8d22bac3', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/aa48394a7b7e55e3977a03bc8d22bac3/invoke.js"></script>
+    </div>
+
+    <button id="up_v" class="btn">📹 UPLOAD MAIN VIDEO</button>
+    <button id="up_p" class="btn" style="opacity:0.4" disabled>📸 UPLOAD PNG PHOTO</button>
+    <button id="process_btn" class="btn">🚀 START HEAVY RENDER</button>
+
+    <div id="loading" class="loader"></div>
+
+    <div id="result">
+        <video id="v_player" controls playsinline></video>
+        <br>
+        <a id="dl_link" href="#" target="_blank" style="display:none; background:#fff; color:#000; padding:15px 40px; text-decoration:none; border-radius:50px; font-weight:bold; margin-top:20px;">📥 DOWNLOAD 4K REEL</a>
+    </div>
+</div>
+
+<script src="https://pl28902227.effectivegatecpm.com/d8/a6/e5/d8a6e5570fda7fe307b4db674c077543.js"></script>
+
+<script>
+    let videoId = null, pngId = null;
+    const cName = "daokey9qk";
+
+    // Video Upload Logic
+    var vWidget = cloudinary.createUploadWidget({ cloudName: cName, uploadPreset: cName, sources: ['local'], multiple: false }, (err, res) => {
+        if (!err && res.event === "success") {
+            videoId = res.info.public_id;
+            document.getElementById('up_v').innerText = "Video Ready! ✅";
+            document.getElementById('up_p').disabled = false;
+            document.getElementById('up_p').style.opacity = "1";
+        }
+    });
+
+    // PNG Upload Logic
+    var pWidget = cloudinary.createUploadWidget({ cloudName: cName, uploadPreset: cName, sources: ['local'], multiple: false }, (err, res) => {
+        if (!err && res.event === "success") {
+            pngId = res.info.public_id;
+            document.getElementById('up_p').innerText = "PNG Ready! ✅";
+            document.getElementById('process_btn').style.display = "block";
+        }
+    });
+
+    document.getElementById('process_btn').onclick = function() {
+        const btn = this;
+        btn.innerText = "RENDERING LAYERS...";
+        btn.disabled = true;
+        document.getElementById('loading').style.display = "block";
+
+        // MASTER ENGINE LOGIC (Zoom Background + Mute Original + Pro Audio)
+        const finalUrl = `https://res.cloudinary.com/${cName}/video/upload/du_12,w_720,h_1280,c_fill,e_mute/l_video:VN20260313_090637_sns3az,so_6,du_6,w_1080,h_1920,c_crop,fl_layer_apply/l_${pngId},w_500,c_scale,so_6,fl_layer_apply/l_audio:ReelAudio-62329_nufe7o,fl_layer_apply/${videoId}.mp4`;
+
+        // Pehla check 12 second baad (Server rendering time)
+        setTimeout(() => {
+            const player = document.getElementById('v_player');
+            player.src = finalUrl;
+            player.style.display = "block";
+            
+            player.oncanplay = function() {
+                document.getElementById('loading').style.display = "none";
+                document.getElementById('dl_link').style.display = "inline-block";
+                document.getElementById('dl_link').href = finalUrl;
+                btn.innerText = "RENDER COMPLETE ✅";
+            };
+
+            // Agar 400 error aata hai toh auto-retry logic
+            player.onerror = function() {
+                btn.innerText = "RETrying (Server Busy)...";
+                setTimeout(() => { player.src = finalUrl + "?retry=" + new Date().getTime(); }, 5000);
+            };
+            
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }, 12000);
+    };
+
+    document.getElementById('up_v').onclick = () => vWidget.open();
+    document.getElementById('up_p').onclick = () => pWidget.open();
+</script>
+
+</body>
+  </html>
+          
